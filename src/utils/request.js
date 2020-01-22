@@ -8,7 +8,7 @@ import jsonBig from 'json-bigint'
 import store from '@/store'
 
 const request = axios.create({
-  baseURL: 'localhost:5000/api/'
+  baseURL: '/api/'
 })
 
 // transformResponse 是 axios 专门提供的一个 API
