@@ -9,7 +9,17 @@ import request from '@/utils/request'
 export const login = data => {
   return request({
     method: 'POST',
-    url: '/app/v1_0/authorizations',
+    url: '/movie/account/login',
+    data
+  })
+}
+/**
+ * 用户注册
+ */
+export const register = data => {
+  return request({
+    method: 'POST',
+    url: '/movie/account/register',
     data
   })
 }
