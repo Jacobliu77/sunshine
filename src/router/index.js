@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import home from '@/views/Home/'
 import login from '@/views/login/'
 import register from '@/views/register/'
+import account from '@/views/account/home/'
+import acchome from '@/views/account/home/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,22 @@ const routes = [
     path: '/register',
     name: 'register',
     component: register
+  },
+  {
+    path: '/account',
+    name: 'account',
+    component: account,
+    children: [
+      {
+        path: '',
+        component: acchome
+      }
+      // ,
+      // {
+      //   path: 'userinfo', // 修改用户信息
+      //   component: () => import('../views/account')
+      // }
+    ]
   },
   {
     path: '*',

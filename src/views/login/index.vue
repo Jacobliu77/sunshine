@@ -62,6 +62,7 @@ export default {
         })
         // console.log(res.data)
         window.localStorage.setItem('user-token', res.data.data.token)
+        window.localStorage.setItem('user-account', res.data.data.account)
         // 跳转到首页
         if (res.data.code === 200) {
           this.$message.success(res.data.data.msg)

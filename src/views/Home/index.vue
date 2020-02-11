@@ -31,7 +31,7 @@
           >{{item.area}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="4">消息中心</el-menu-item>
-        <el-menu-item index="5">个人中心</el-menu-item>
+        <el-menu-item index="5" @click="$router.push('/account')">个人中心</el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
