@@ -1,7 +1,7 @@
 <template>
   <div class="layout-aside">
     <div class="title">
-      <img src="../../assets/img/logo_admin.png" alt />
+      <img src="../../assets/img/icon.png" alt />
     </div>
     <!-- 左侧导航组件  开启路由 :router="true" 或者 router-->
     <el-menu
@@ -20,33 +20,45 @@
       <el-submenu index="1">
         <!-- 具名插槽 -->
         <template slot="title">
-          <i class="el-icon-s-management"></i>
-          <span>内容管理</span>
+          <i class="el-icon-s-tools"></i>
+          <span>电影评论管理</span>
         </template>
         <!-- 匿名插槽 -->
-        <el-menu-item index="/home/publish">
-          <span>发布文章</span>
-        </el-menu-item>
-        <el-menu-item index="/home/articles">文章列表</el-menu-item>
-        <el-menu-item index="/home/comment">评论管理</el-menu-item>
-        <el-menu-item index="/home/material">素材管理</el-menu-item>
+        <el-menu-item index="/account/comment/getcomm">获取电影评论</el-menu-item>
+        <el-menu-item index="/account/comment/removecomm">删除评论</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <!-- 具名插槽 -->
         <template slot="title">
-          <i class="el-icon-star-on"></i>
-          <span>粉丝管理</span>
+          <i class="el-icon-video-camera-solid"></i>
+          <span>电影管理</span>
         </template>
         <!-- 匿名插槽 -->
-        <el-menu-item index="/home/picture">图文数据</el-menu-item>
-        <el-menu-item index="/home/fansinfo">粉丝概况</el-menu-item>
-        <el-menu-item index="/home/fanspicture">粉丝画像</el-menu-item>
-        <el-menu-item index="/home/fanslist">粉丝列表</el-menu-item>
+        <el-menu-item index="/account/film/addfilm">添加电影</el-menu-item>
+        <el-menu-item index="/account/film/delfilm">删除电影</el-menu-item>
+        <el-menu-item index="/account/film/getfilminfo">电影详情查询</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/home/userinfo">
-        <i class="el-icon-user-solid"></i>
-        <span>账户信息</span>
-      </el-menu-item>
+       <el-submenu index="3">
+        <!-- 具名插槽 -->
+        <template slot="title">
+         <i class="el-icon-s-custom"></i>
+          <span>个人中心</span>
+        </template>
+        <!-- 匿名插槽 -->
+        <el-menu-item index="/account/userinfo">账户信息</el-menu-item>
+        <el-menu-item index="/account/del">账户删除</el-menu-item>
+        <el-menu-item index="/account/resetpass">密码安全</el-menu-item>
+      </el-submenu>
+      <el-submenu index="4">
+        <!-- 具名插槽 -->
+        <template slot="title">
+         <i class="el-icon-user-solid"></i>
+          <span>管理员账户操作</span>
+        </template>
+        <!-- 匿名插槽 -->
+        <el-menu-item index="/account/admin/find">用户账户查询</el-menu-item>
+        <el-menu-item index="/account/admin/all">用户账户信息获取</el-menu-item>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -68,13 +80,12 @@ export default {
 
 <style lang='less' scoped>
 .layout-aside {
-//   width: 230px;
+  // width: 230px;
   .el-menu {
     border-right: none;
   }
   .title {
     background-color: #2e2f32;
-    text-align: center;
     padding: 10px 0;
     img {
       height: 35px;

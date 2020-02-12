@@ -32,12 +32,47 @@ const routes = [
       {
         path: '',
         component: acchome
+      },
+      {
+        path: 'userinfo', // 修改用户信息
+        component: () => import('../views/account/account')
+      },
+      {
+        path: 'resetpass', // 修改用户密码
+        component: () => import('../views/account/account/resetpass.vue')
+      },
+      {
+        path: 'del', // 删除账户
+        component: () => import('../views/account/account/del.vue')
+      },
+      {
+        path: 'comment/getcomm', // 获取电影评论
+        component: () => import('../views/account/comment/get')
+      },
+      {
+        path: 'comment/removecomm', // 删除电影评论
+        component: () => import('../views/account/comment/remove')
+      },
+      {
+        path: 'film/addfilm', // 添加电影
+        component: () => import('../views/account/film/add')
+      },
+      {
+        path: 'film/delfilm', // 删除电影
+        component: () => import('../views/account/film/del')
+      },
+      {
+        path: 'film/getfilminfo', // 获取电影详情
+        component: () => import('../views/account/film/getinfo')
+      },
+      {
+        path: 'admin/find', // 获取电影详情
+        component: () => import('../views/account/admin/find')
+      },
+      {
+        path: 'admin/all', // 获取电影详情
+        component: () => import('../views/account/admin/all')
       }
-      // ,
-      // {
-      //   path: 'userinfo', // 修改用户信息
-      //   component: () => import('../views/account')
-      // }
     ]
   },
   {

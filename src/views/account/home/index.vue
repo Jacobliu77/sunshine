@@ -1,7 +1,7 @@
 <template>
 <el-container>
     <!-- 左右布局 -->
-    <el-aside  :style="{width:isCollapse?'60px':'230px'}" style="transition: all 0.5s; min-height:100vh;background-color:#353b4e;">
+    <el-aside  :style="{width:$store.state.isforder?'65px':'230px'}" style="transition: all 0.5s; min-height:100vh;background-color:#353b4e;">
       <layout-aside></layout-aside>
     </el-aside>
     <!-- 右侧容器 -->

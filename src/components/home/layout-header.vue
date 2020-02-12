@@ -4,7 +4,7 @@
       <!-- 先定义一行 -->
      <el-col class='left' :span="12">
          <i  @click="forder" :class='{"el-icon-s-unfold":$store.state.isforder,"el-icon-s-fold":!$store.state.isforder}'></i>
-         <span>热点资讯后台管理©华东交通大学理工学院</span>
+         <span>Sunshine电影推荐后台管理©呆呆峰</span>
      </el-col>
      <el-col class='right' :span="12">
          <el-row type='flex' justify="end" align="middle">
@@ -12,7 +12,7 @@
              <!-- 下拉菜单 -->
              <el-dropdown @command="clickMenu">
                  <!-- 匿名插槽  下拉菜单显示的元素内容 -->
-                 <span>{{ userInfo.name }}</span>
+                 <span>欢迎您 {{ userInfo.name }} ！</span>
                  <el-dropdown-menu slot="dropdown">
                      <el-dropdown-item command="info">个人信息</el-dropdown-item>
                      <el-dropdown-item command="git">git地址</el-dropdown-item>
@@ -28,29 +28,18 @@ export default {
   data () {
     return {
       userInfo: {
+        name: ''
       }, // 定义一个用户对象
-      defaultImg: require('../../assets/img/loginpng.png') // 先将图片转化成了一个变量
+      defaultImg: require('../../assets/img/icon.png') // 先将图片转化成了一个变量
     }
   },
   created () {
-    // this.getUserInfo()
-    // eventBus.$on('updateUserInfo', () => {
-    //   // 认为别人更新了数据 自己也应该更新
-    //   this.getUserInfo()
-    // })
+    this.userInfo.name = window.localStorage.getItem('user-account')
   },
   methods: {
     forder () {
       this.$store.state.isforder = !this.$store.state.isforder
-      // eventBus.$emit('forderchange', this.isCollapse)
     },
-    // getUserInfo () {
-    //   this.$axios({
-    //     url: '/user/profile'
-    //   }).then(result => {
-    //     this.userInfo = result.data
-    //   })
-    // },
     // 点击菜单项时触发
     clickMenu (command) {
       if (command === 'info') {
@@ -73,6 +62,7 @@ export default {
     height:60px;
     .left {
         font-size: 20px;
+        text-align: left;
         span {
            color: #2c3e50;
            font-size: 16px;
