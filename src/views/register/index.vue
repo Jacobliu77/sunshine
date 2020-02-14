@@ -3,11 +3,9 @@
     <el-card class="box-card">
       <img src="../../assets/img/icon.png" style="height:60px" />
       <h3>欢迎来到注册页</h3>
-      <el-form ref="myForm" :model="formdata" :rules="loginRules" v-if="isshow">
-        <el-form-item prop="isadmin">
-          <el-switch v-model="formdata.isadmin" active-color="#13ce66" inactive-color="#ff4949"
+         <el-switch v-model="isshow" class="switch"  active-color="#13ce66" inactive-color="#ff4949"
           active-text="管理员身份" inactive-text="普通游客身份"></el-switch>
-        </el-form-item>
+      <el-form ref="myForm" :model="formdata" :rules="loginRules" v-if="!isshow">
         <el-form-item prop="mobile">
           <el-input v-model="formdata.mobile" placeholder="请输入账号" class="mobile"></el-input>
         </el-form-item>
@@ -33,11 +31,7 @@
         </el-form-item>
       </el-form>
       <el-form ref="admmyForm" :model="admformdata" :rules="admloginRules" v-else>
-        <el-form-item prop="isadmin">
-          <el-switch v-model="admformdata.isadmin" active-color="#13ce66" inactive-color="#ff4949"
-          active-text="管理员身份" inactive-text="普通游客身份"></el-switch>
-        </el-form-item>
-        <el-form-item prop="admincode" v-show="admformdata.isadmin">
+        <el-form-item prop="admincode">
           <el-tooltip class="item" effect="dark" content="校验码联系超级管理员获取" placement="bottom">
           <el-input v-model="admformdata.admincode" placeholder="请输入管理员校验码" class="mobile"></el-input>
           </el-tooltip>
@@ -79,7 +73,6 @@ export default {
     }
     return {
       formdata: {
-        isadmin: false,
         mobile: 'lyg159',
         password: 'lyg159',
         repassword: 'lyg159',
@@ -87,8 +80,8 @@ export default {
         check: false
       },
       admformdata: {
-        isadmin: true,
         mobile: 'lyg159',
+        admincode: '',
         password: 'lyg159',
         repassword: 'lyg159',
         email: 'lyg159@123.com',
@@ -127,6 +120,13 @@ export default {
         check: [{ validator }]
       },
       admloginRules: {
+        admincode: [
+          { required: true, message: '请输入您的管理员校验码' },
+          {
+            pattern: /^[A][1][0][0][8][6][2][0][2][0]$/,
+            message: '您的管理员校验码有误联系超管核对'
+          }
+        ],
         mobile: [
           { required: true, message: '请输入您的账号' },
           {
@@ -175,7 +175,7 @@ export default {
           account: this.formdata.mobile,
           password: this.formdata.password,
           email: this.formdata.email,
-          isadmin: this.formdata.isadmin
+          isadmin: false
         })
         // 跳转到登录页
         if (res.data.code === 200) {
@@ -191,10 +191,10 @@ export default {
     async admonRegister () {
       const success =
         (await this.$refs.admmyForm.validate()) &&
-        this.admformdata.password === this.admformdata.repassword
+        this.admformdata.password === this.admformdata.repassword && this.admformdata.admincode === 'A100862020'
       if (!success) {
         // 验证不通过待处理
-        this.$message.error('请仔细核验表单项或检查两次输入密码是否一致')
+        this.$message.error('请仔细检查两次输入密码是否一致或输入的管理员校验码无效')
         return
       }
       try {
@@ -203,7 +203,7 @@ export default {
           account: this.admformdata.mobile,
           password: this.admformdata.password,
           email: this.admformdata.email,
-          isadmin: this.admformdata.isadmin
+          isadmin: true
         })
         // 跳转到登录页
         if (res.data.code === 200) {
@@ -216,10 +216,6 @@ export default {
         this.$message.error(err)
       }
     }
-  },
-  created () {
-    this.isshow = this.formdata.isadmin
-    this.formdata.isadmin = !this.admformdata.isadmin
   }
 }
 </script>
@@ -232,6 +228,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .switch {
+    margin-bottom: 20px
+  }
   .box-card {
     width: 440px;
     height: 660px;
