@@ -80,18 +80,18 @@ export default {
     return {
       formdata: {
         isadmin: false,
-        mobile: '',
-        password: '',
-        repassword: '',
-        email: '',
+        mobile: 'lyg159',
+        password: 'lyg159',
+        repassword: 'lyg159',
+        email: 'lyg159@123.com',
         check: false
       },
       admformdata: {
         isadmin: true,
-        mobile: '',
-        password: '',
-        repassword: '',
-        email: '',
+        mobile: 'lyg159',
+        password: 'lyg159',
+        repassword: 'lyg159',
+        email: 'lyg159@123.com',
         check: false
       },
       isshow: true,
@@ -175,7 +175,7 @@ export default {
           account: this.formdata.mobile,
           password: this.formdata.password,
           email: this.formdata.email,
-          isadmin: !this.isshow
+          isadmin: this.formdata.isadmin
         })
         // 跳转到登录页
         if (res.data.code === 200) {
@@ -203,7 +203,7 @@ export default {
           account: this.admformdata.mobile,
           password: this.admformdata.password,
           email: this.admformdata.email,
-          isadmin: !this.isshow
+          isadmin: this.admformdata.isadmin
         })
         // 跳转到登录页
         if (res.data.code === 200) {
