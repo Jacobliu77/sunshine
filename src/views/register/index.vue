@@ -73,18 +73,18 @@ export default {
     }
     return {
       formdata: {
-        mobile: 'lyg159',
-        password: 'lyg159',
-        repassword: 'lyg159',
-        email: 'lyg159@123.com',
+        mobile: '',
+        password: '',
+        repassword: '',
+        email: '',
         check: false
       },
       admformdata: {
-        mobile: 'lyg159',
+        mobile: '',
         admincode: '',
-        password: 'lyg159',
-        repassword: 'lyg159',
-        email: 'lyg159@123.com',
+        password: '',
+        repassword: '',
+        email: '',
         check: false
       },
       isshow: true,

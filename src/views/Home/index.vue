@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <el-menu
-        :default-active="activeIndex2"
+        :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
@@ -13,25 +13,30 @@
         <el-menu-item index="0">
           <img src="../../assets/img/icon.png" alt />
         </el-menu-item>
-        <el-menu-item index="1">首页</el-menu-item>
+        <el-menu-item  @click="$router.push('/home')" index="1">首页</el-menu-item>
         <el-submenu index="2">
           <template slot="title">风格选电影</template>
           <el-menu-item
             v-for="(item,index) in stylechannel"
             :key="index"
             :index="`2-${item.id}`"
+            @click="$router.push('/search')"
           >{{item.style}}</el-menu-item>
         </el-submenu>
-        <el-submenu index="3">
+        <el-submenu  index="3">
           <template slot="title">位置选电影</template>
           <el-menu-item
             v-for="(item,index) in addresschannel"
             :key="index"
             :index="`3-${item.id}`"
+            @click="$router.push('/search')"
           >{{item.area}}</el-menu-item>
         </el-submenu>
-        <el-menu-item index="4">消息中心</el-menu-item>
-        <el-menu-item index="5" @click="$router.push('/account')">个人中心</el-menu-item>
+        <el-menu-item index="4" @click="$router.push('/account')">个人中心</el-menu-item>
+        <el-menu-item style="float: right;margin-right:40px" index="5">
+          <el-input  size="small" v-model="$store.state.searchkeywords" placeholder="搜索电影"> </el-input>
+          <el-button @click="$router.push('/search')" type="text" style="background-color:#545c64;color:#fff;margin-left:20px"  icon="el-icon-search"></el-button>
+          </el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
@@ -197,25 +202,23 @@ export default {
   data () {
     return {
       activeIndex: '1',
-      activeIndex2: '1',
       stylechannel: [],
       addresschannel: [],
+      hotfilm: [],
       currentDate: new Date()
     }
   },
   methods: {
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+      this.$store.state.active = key
     },
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
-      console.log(this.stylechannel)
     },
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
-      console.log(this.addresschannel)
     }
     // load () {
     //   this.count += 2

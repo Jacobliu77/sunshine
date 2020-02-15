@@ -2,7 +2,7 @@
 <el-container>
     <el-header>
       <el-menu
-        :default-active="activeIndex2"
+        :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
@@ -13,65 +13,91 @@
         <el-menu-item index="0">
           <img src="../../assets/img/icon.png" alt />
         </el-menu-item>
-        <el-menu-item @click="$router.push('/home')" index="1">首页</el-menu-item>
-        <el-submenu index="2">
+        <el-menu-item  @click="$router.push('/home')" index="1">首页</el-menu-item>
+        <el-submenu  @click="$router.push('/search')" index="2">
           <template slot="title">风格选电影</template>
           <el-menu-item
             v-for="(item,index) in stylechannel"
             :key="index"
             :index="`2-${item.id}`"
-             @click="$router.push('/search')"
           >{{item.style}}</el-menu-item>
         </el-submenu>
-        <el-submenu index="3">
+        <el-submenu  @click="$router.push('/search')" index="3">
           <template slot="title">位置选电影</template>
           <el-menu-item
             v-for="(item,index) in addresschannel"
             :key="index"
             :index="`3-${item.id}`"
-            @click="$router.push('/search')"
           >{{item.area}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="4" @click="$router.push('/account')">个人中心</el-menu-item>
         <el-menu-item style="float: right;margin-right:40px" index="5">
           <el-input  size="small" v-model="$store.state.searchkeywords" placeholder="搜索电影"> </el-input>
-          <el-button @click="$router.push('/search')" type="text" style="background-color:#545c64;color:#fff;margin-left:20px"  icon="el-icon-search"></el-button>
-        </el-menu-item>
+          <el-button  @click="onsearch" type="text" style="background-color:#545c64;color:#fff;margin-left:20px"
+           icon="el-icon-search"></el-button>
+          </el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
      <el-card>
-    <bread-crumb slot="header">
-      <template slot="title">个人信息更新</template>
-    </bread-crumb>
-    <el-form
-      :model="formData"
-      status-icon
-      :rules="rules"
-      ref="myForm"
-      label-width="100px"
-      class="demo-ruleForm"
-    >
-      <el-form-item label="用户名" prop="name">
-        <el-input type="text" v-model="formData.name" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="个人简介" prop="info">
-        <el-input type="text" v-model="formData.intro" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="formData.email" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="手机" prop="mobile">
-        <el-input v-model="formData.mobile" style="width:40%" disabled></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="saveUserInfo">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <el-upload :http-request="uploadImg" class="head-upload" action :show-file-list="true">
-      <img :src="formData.photo ? formData.photo : defaultImg" alt />
-    </el-upload>
+         <el-page-header slot="header" @back="$router.push('/home')" title="回首页" content="搜索电影页">
+        </el-page-header>
+         <div style="text-align:left;font-size:18px;margin-left:40px">
+         <span>电影条件筛选</span>
+         </div>
+         <div style="text-align:left;font-size:18px;margin:20px 60px">
+             <el-divider direction="vertical"></el-divider>
+         <span>地区：</span>
+         <el-divider direction="vertical"></el-divider>
+         <el-tag :type="type"  style="font-size:17px;margin-left:10px ;" >全部</el-tag>
+         <el-tag
+         v-for="(item,index) in addresschannel"
+            :key="index"
+            :index="`3-${item.id}`"
+             :type="type"
+             style="font-size:17px;margin-left:10px ;"
+             >{{item.area}}</el-tag>
+         </div>
+          <div style="text-align:left;font-size:18px;margin:20px 60px">
+            <el-divider direction="vertical"></el-divider>
+         <span>类型：</span>
+         <el-divider direction="vertical"></el-divider>
+         <el-tag :type="type"  style="font-size:17px;margin-left:10px ;" >全部</el-tag>
+         <el-tag
+         v-for="(item,index) in stylechannel"
+            :key="index"
+            :index="`3-${item.id}`"
+             :type="type"
+             style="font-size:17px;margin-left:10px ;"
+             >{{item.style}}</el-tag>
+         </div>
+          <div style="text-align:left;font-size:18px;margin-left:40px">
+         <span>已为您筛选条件为：</span>
+         <el-divider direction="vertical"></el-divider>
+          <el-tag
+         v-for="(item,index) in stylechannel"
+            :key="index"
+            :index="`3-${item.id}`"
+             closable=true
+             style="font-size:17px;margin:10px ;"
+             >{{item.style}}</el-tag>
+        <span>共</span><span style="color:blue;font-weight:700">10086</span><span>条数据</span>
+         </div>
+      <el-divider></el-divider>
+      <div style="text-align:left;font-size:18px;margin-left:40px">
+        <el-select v-model="sort" placeholder="请选择排序方式">
+           <el-option value='选项1' label='最新'></el-option>
+           <el-option value='选项2' label='最热'></el-option>
+           <el-option value='选项3' label='好评'></el-option>
+         </el-select>
+         </div>
+      {{$store.state.active}}
+      <el-divider></el-divider>
+        <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+        </el-pagination>
   </el-card>
     </el-main>
     <el-footer>
@@ -186,84 +212,25 @@
 
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
+
 export default {
   data () {
     return {
-      formData: {
-        name: '', // 用户名
-        intro: '', // 简介
-        photo: '', // 头像
-        email: '', // 邮箱
-        mobile: ''
-      },
-      activeIndex2: '1',
+      activeIndex: '1',
       stylechannel: [],
       addresschannel: [],
-      hotfilm: [],
-      currentDate: new Date(),
-      defaultImg: '../../../assets/img/icon.png',
-      rules: {
-        name: [
-          { required: true, message: '用户名不能为空' },
-          {
-            min: 1,
-            max: 7,
-            message: '用户名长度在1到7个字符'
-          }
-        ],
-        email: [
-          { required: true, message: '邮箱不能为空' },
-          {
-            pattern: /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
-            message: '邮箱格式不正确'
-          }
-        ]
-      }
+      filters: [],
+      type: 'info',
+      sort: '',
+      currentDate: new Date()
     }
   },
   methods: {
-    uploadImg (params) {
-      this.loading = true // 打开弹层
-      let data = new FormData()
-      data.append('photo', params.file)
-      this.$axios({
-        url: '/user/photo',
-        method: 'patch',
-        data
-      }).then(result => {
-        this.loading = false // 关闭弹层
-        this.formData.photo = result.data.photo // 给当前的头像赋值
-        // 认为保存成功 => 通知header组件 更新信息
-        // eventBus.$emit('updateUserInfo')
-      })
-    },
-    getuserinfo () {
-      this.$axios({
-        url: '/user/profile'
-      }).then(result => {
-        this.formData = result.data
-      })
-    },
-    saveUserInfo () {
-      this.$refs.myForm.validate().then(result => {
-        //  调用保存接口
-        this.$axios({
-          url: '/user/profile',
-          method: 'patch',
-          data: this.formData
-        }).then(result => {
-          this.$message({
-            type: 'success',
-            message: '保存用户信息成功'
-          })
-        })
-      })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    onsearch () {
+      console.log('触发了搜索事件')
     },
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+      this.$store.state.active = key
     },
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
