@@ -43,7 +43,8 @@
       <el-carousel indicator-position="none" height="460px">
         <el-carousel-item v-for="item in 5" :key="item"></el-carousel-item>
       </el-carousel>
-      <el-row type="flex" class="row-bg" justify="space-between">
+      <template class="news">
+         <el-row type="flex" class="row-bg" justify="space-between">
         <el-col :span="7">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -69,23 +70,92 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row>
-  <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-    <el-card :body-style="{ padding: '0px' }">
-      <img src="../../assets/img/moren.jpg" class="image">
-      <div style="padding: 14px;">
-        <span>好吃的汉堡</span>
-        <div class="bottom clearfix">
-          <!-- <time class="time">{{ currentDate }}</time> -->
-          <el-button type="text" class="button">操作按钮</el-button>
-        </div>
-      </div>
-    </el-card>
-  </el-col>
-</el-row>
+      </template>
+      <el-divider></el-divider>
+      <h2 style="text-align:left;padding-left:45px"><i class="el-icon-video-camera-solid"></i> 最热推荐</h2>
+      <el-row type="flex" class="row-bg" justify="space-around">
+          <el-col :span="4">
+            <div class="top" >1</div>
+            <el-card :body-style="{ padding: '0px' }">
+          <img
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            class="image"
+          />
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
+          </div>
+        </el-card>
+          </el-col>
+          <el-col :span="4">
+            <div class="top bb" >2</div>
+            <el-card :body-style="{ padding: '0px' }">
+          <img
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            class="image"
+          />
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
+          </div>
+        </el-card>
+          </el-col>
+           <el-col :span="4">
+             <div class="top cc" >3</div>
+            <el-card :body-style="{ padding: '0px' }">
+          <img
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            class="image"
+          />
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
+          </div>
+        </el-card>
+          </el-col>
+          <el-col :span="4">
+            <el-card :body-style="{ padding: '0px' }">
+          <img
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            class="image"
+          />
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
+          </div>
+        </el-card>
+          </el-col>
+           <el-col :span="4">
+            <el-card :body-style="{ padding: '0px' }">
+          <img
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            class="image"
+          />
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
+          </div>
+        </el-card>
+          </el-col>
+        </el-row>
     </el-main>
     <el-footer>
-      <footer class="footer" style="width: 1519px;">
+      <footer class="footer" style="width: 100%;">
         <div class="footer-inner">
           <h3 class="homeico">
             <img src="../../assets/img/icon.png" alt />
@@ -244,17 +314,64 @@ export default {
   }
 }
 .el-main {
-  // background-color: #e9eef3;
-  color: #333;
-  // text-align: center;
+  .news {
+    //news
+.row-bg {
+  padding: 10px 0;
+}
+.el-row {
+  margin: 20px 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both;
+  }
+
   .box-card {
-    text-align: left;
-    .hh {
-      font-size: 24px;
-      font-weight: 700;
+    width: 100%;
+  }
+}
+  }
+  .el-row {
+    margin: 40px 0;
+    &:last-child {
+      margin-bottom: 0;
     }
   }
-   .time {
+  .el-col {
+    border-radius: 4px;
+    .top {
+      background-color:#e63131;
+      color: aliceblue;
+      width:45px;
+      height:45px;
+      position: absolute;
+      font-size: 35px;
+      font-weight: 700
+    }
+    .bb {
+      background-color:#ee8447;
+    }
+    .cc {
+       background-color:#ebee47;
+    }
+     .time {
     font-size: 13px;
     color: #999;
   }
@@ -270,7 +387,7 @@ export default {
   }
 
   .image {
-    width: 50%;
+    width: 100%;
     display: block;
   }
 
@@ -282,6 +399,14 @@ export default {
 
   .clearfix:after {
       clear: both
+  }
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
   }
 }
 
@@ -316,38 +441,6 @@ body > .el-container {
   background: url("../../assets/img/05.jpg");
   background-size: cover;
 }
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.el-row {
-  margin: 20px 0;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  border-radius: 4px;
-  .text {
-    font-size: 14px;
-  }
-
-  .item {
-    margin-bottom: 18px;
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both;
-  }
-
-  .box-card {
-    width: 100%;
-  }
-}
 .el-footer {
   // min-width: 980px;
   // background: #20232c;
@@ -356,7 +449,7 @@ body > .el-container {
     height: 80px;
   }
   .footer-inner {
-    width: 96.5%;
+    width: 100%;
     padding: 29px 0 33px;
   }
   .footer-inner,
