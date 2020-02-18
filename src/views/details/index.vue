@@ -54,14 +54,58 @@
                 </div>
                 <div class="right">
                     <div class="right-title">
-                        <h1 style="font-size:38px;line-hight:40px">叶问4：完结篇 (2019) <span style="font-size:40px;color:yellow;margin-left:30px">7.8</span> </h1>
-                        <h3 style="font-size:22px">Ip Man 4 </h3>
+                        <h1 style="font-size:38px;line-hight:40px">叶问4：完结篇 (2019) <span style="font-size:34px;color:yellow;margin-left:30px">7.8</span> </h1>
+                        <h3 style="font-size:22px">Ip Man 4  <a href="#" style="text-decoration: none;color:#fff;margin-left:10px">更多别名></a></h3>
                     </div>
-                    <div class="right-main"></div>
+                    <div class="right-main">
+                       <div>
+                          <span style="font-size:25px">导演：</span>
+                          <span>叶伟信</span>
+                      </div>
+                      <div style="margin-top:15px">
+                          <span style="font-size:22px;margin-top:30px">演员列表:  </span>
+                          <el-divider direction="vertical"></el-divider>
+                          <span>胡歌</span>
+                          <el-divider direction="vertical"></el-divider>
+                          <span>刘亦菲</span>
+                      </div>
+                      <el-rate
+                        v-model="showscore"
+                        disabled
+                        style="margin:15px 0 ;font-size:25px;display:inline-block">
+                      </el-rate><span style="font-size:25px;color: rgb(243, 213, 44);">{{score}} 分</span>
+                       <div class="plot">
+                          <p>《叶问4》讲述了叶师傅1964年到美国的一段生活经历，发现华人在美国遭受洋人
+                            的欺压和凌辱愈加严重，危难之中，叶问再次挺身而出，让世界看到我们的态度：谈，
+                            可以；打，奉陪！“</p>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div></div>
+        <el-row :gutter="12" class="bottom">
+          <el-col :span="18">
+            <el-card shadow="always">
+             <p style="font-size:25px;margin-top:-5px;font-weight:700">精彩快播</p>
+              <el-divider></el-divider>
+             <video src="../../assets/video/test.mp4" controls></video>
+            </el-card>
+          </el-col>
+          <el-col :span="6">
+            <el-card shadow="always">
+            <p style="font-size:25px;margin-top:-5px;font-weight:700">相关新闻</p>
+             <el-divider></el-divider>
+             <el-timeline>
+              <el-timeline-item
+                v-for="(activity, index) in activities"
+                :key="index"
+                :timestamp="activity.timestamp">
+                {{activity.content}}
+              </el-timeline-item>
+            </el-timeline>
+            </el-card>
+          </el-col>
+        </el-row>
       </el-card>
     </el-main>
     <el-footer>
@@ -186,7 +230,32 @@ export default {
       filters: [],
       type: 'info',
       sort: '',
-      currentDate: new Date()
+      score: 7.8,
+      showscore: 0,
+      currentDate: new Date(),
+      activities: [{
+        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
+        timestamp: '上映后30天 2020-01-18'
+      }, {
+        content: '通过审核',
+        timestamp: '上映后29天 2020-01-17'
+      }, {
+        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
+        timestamp: '上映后23天 2020-01-11'
+      }, {
+        content: '创建成功',
+        timestamp: '上映后23天 2020-01-11'
+      }, {
+        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
+        timestamp: '上映后23天 2020-01-11'
+      }, {
+        content: '《叶问4：完结篇》票房破11亿 刷新功夫电影纪录',
+        timestamp: '上映后23天 2020-01-11'
+      }, {
+        content: '《叶问4：完结篇》票房破11亿 刷新功夫电影纪录',
+        timestamp: '上映后23天 2020-01-11'
+      }
+      ]
     }
   },
   methods: {
@@ -205,11 +274,15 @@ export default {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
       console.log(this.addresschannel)
+    },
+    starLevel (evaluate) {
+      return evaluate / 2 // 最高评分为10，星级只有5级 所以需要除2，再四舍五入获取评分数
     }
   },
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
+    this.showscore = this.starLevel(this.score)
   }
 }
 </script>
@@ -285,11 +358,28 @@ body > .el-container {
             width: 100%;
           }
           .right-main {
+            margin-top:20px;
             color: #000;
             height: 300px;
             width: 100%;
+            .plot {
+              width: 100%;
+              height: 300px;
+              background: url('../../assets/img/001.png')no-repeat;
+              background-size: contain;
+              p {
+                padding: 38px 25px 25px 103px;
+                line-height: 30px;
+                font-size: 15px;
+              }
+            }
           }
       }
+  }
+  .bottom {
+    .el-card__header {
+      padding: 0 10px;
+    }
   }
 }
 .el-footer {
