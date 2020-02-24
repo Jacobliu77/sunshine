@@ -175,7 +175,7 @@ export default {
           account: this.formdata.mobile,
           password: this.formdata.password,
           email: this.formdata.email,
-          isadmin: false
+          is_admin: false
         })
         // 跳转到登录页
         if (res.data.code === 200) {
@@ -203,7 +203,7 @@ export default {
           account: this.admformdata.mobile,
           password: this.admformdata.password,
           email: this.admformdata.email,
-          isadmin: true
+          is_admin: true
         })
         // 跳转到登录页
         if (res.data.code === 200) {

@@ -32,7 +32,7 @@
             @click="$router.push('/search')"
           >{{item.area}}</el-menu-item>
         </el-submenu>
-        <el-menu-item index="4" @click="$router.push('/account')">个人中心</el-menu-item>
+        <el-menu-item index="4" @click="tosomewhere">个人中心</el-menu-item>
         <el-menu-item style="float: right;margin-right:40px" index="5">
           <el-input  size="small" v-model="$store.state.searchkeywords" placeholder="搜索电影"> </el-input>
           <el-button @click="$router.push('/search')" type="text" style="background-color:#545c64;color:#fff;margin-left:20px"  icon="el-icon-search"></el-button>
@@ -289,6 +289,13 @@ export default {
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
+    },
+    tosomewhere () {
+      if (window.localStorage.getItem('isAdmin') === 'ADMIN') {
+        this.$router.push('/account')
+      } else {
+        this.$router.push('/visitor')
+      }
     }
     // load () {
     //   this.count += 2
