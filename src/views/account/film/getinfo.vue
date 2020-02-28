@@ -12,7 +12,7 @@
         <h3 v-text="filmData.name ? filmData.name : name"></h3>
         <el-divider></el-divider>
         <el-row :gutter="20">
-          <el-col :span="8"><el-image :src="filmData.picture ? filmData.picture : picurl"></el-image></el-col>
+          <el-col :span="8"><el-image :src="filmData.picture_url ? filmData.picture_url : picurl"></el-image></el-col>
           <el-col :span="16" style="text-align:left">
             <h4>评分： <el-rate
                         v-model="showscore"
@@ -30,10 +30,11 @@
                 {{ item }}
               </el-tag>
                <h4>电影简介：</h4>
-               <h5>{{filmData.introduce}}</h5>
+               <h5 style="margin-left:12px">{{filmData.introduce}}</h5>
           </el-col>
         </el-row>
       </el-card>
+      <el-button type="danger" icon="el-icon-delete" style="margin-top:15px" @click="open">删除当前电影信息</el-button>
   </el-card>
 </div>
 
@@ -52,7 +53,8 @@ export default {
         actors: [
           '刘亦菲',
           '胡歌'
-        ]
+        ],
+        score: '7.1'
       }
 
     }
@@ -60,17 +62,35 @@ export default {
   methods: {
     async getidfilm (id) {
       const { data } = await getfilminfo(id)
-      this.filmData = data.data.items
+      if (data.code === 200) {
+        this.filmData = data.data
+      } else {
+        this.$message({
+          type: 'error',
+          message: '查询电影信息失败' + data.error
+        })
+      }
     },
     async delidfilm (id) {
-      await delfilm(id)
+      const { data } = await delfilm(id)
+      if (data.code === 200) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      } else {
+        this.$message({
+          type: 'error',
+          message: '查询电影信息失败' + data.error
+        })
+      }
     },
     getid () {
       this.getidfilm(this.idinput)
     },
-    open (id) {
+    open () {
       const filmid = this.filmData.id
-      this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该电影信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

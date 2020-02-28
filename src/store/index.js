@@ -9,7 +9,8 @@ export default new Vuex.Store({
     user: getItem('user-token'),
     isforder: false,
     searchkeywords: '',
-    active: ''
+    active: '',
+    accountid: getItem('accountid')
   },
   mutations: {
     setUser (state, data) {

@@ -64,6 +64,7 @@ export default {
         window.localStorage.setItem('user-token', res.data.data.token)
         window.localStorage.setItem('isAdmin', res.data.data.isAdmin)
         window.localStorage.setItem('user-account', res.data.data.account)
+        window.localStorage.setItem('accountid', res.data.data.accountId)
         // 跳转到首页
         if (res.data.code === 200) {
           this.$message.success(res.data.data.msg)

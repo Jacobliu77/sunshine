@@ -1,18 +1,19 @@
 /**
- * 电影接口管理模块
+ * 账户接口管理模块
  */
 import request from '@/utils/request'
 
-export const getfilminfo = params => {
+export const getuserinfo = params => {
   return request({
     method: 'GET',
-    url: `/movie/${params}`
+    url: `/movie/account/${params}`
   })
 }
-export const savefilminfo = fd => {
+export const updateInfo = fd => {
+  console.log(fd)
   return request({
-    method: 'POST',
-    url: `/movie`,
+    method: 'PUT',
+    url: `/movie/account/update`,
     data: fd
   })
 }
