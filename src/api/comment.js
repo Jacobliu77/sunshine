@@ -9,17 +9,15 @@ export const getComm = () => {
     url: '/movie/comment'
   })
 }
-export const getidComm = params => {
+export const getidComm = id => {
   return request({
     method: 'GET',
-    url: '/movie/comment',
-    params
+    url: `/movie/comment/${id}`
   })
 }
 export const delComm = params => {
   return request({
     method: 'DELETE',
-    url: '/movie/comment',
-    params
+    url: `/movie/comment/${params}`
   })
 }

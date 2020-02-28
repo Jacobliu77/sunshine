@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: getItem('user'),
+    user: getItem('user-token'),
     isforder: false,
     searchkeywords: '',
     active: ''
@@ -15,7 +15,7 @@ export default new Vuex.Store({
     setUser (state, data) {
       state.user = data
       // 为了防止刷新数据丢失，这里还需要把数据放到本地存储持久化
-      setItem('user', state.user)
+      setItem('user-token', state.user)
     }
   },
   actions: {

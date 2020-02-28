@@ -68,19 +68,11 @@ const routes = [
         component: () => import('../views/account/comment/get')
       },
       {
-        path: 'comment/removecomm', // 删除电影评论
-        component: () => import('../views/account/comment/remove')
-      },
-      {
         path: 'film/addfilm', // 添加电影
         component: () => import('../views/account/film/add')
       },
       {
-        path: 'film/delfilm', // 删除电影
-        component: () => import('../views/account/film/del')
-      },
-      {
-        path: 'film/getfilminfo', // 获取电影详情
+        path: 'film/getfilminfo', // 获取电影操作
         component: () => import('../views/account/film/getinfo')
       },
       {

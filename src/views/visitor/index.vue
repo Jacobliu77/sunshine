@@ -262,18 +262,13 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    },
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
-      console.log(this.stylechannel)
     },
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
-      console.log(this.addresschannel)
     }
   },
   created () {

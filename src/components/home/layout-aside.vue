@@ -21,11 +21,10 @@
         <!-- 具名插槽 -->
         <template slot="title">
           <i class="el-icon-s-tools"></i>
-          <span>电影评论管理</span>
+          <span>电影评论管理中心</span>
         </template>
         <!-- 匿名插槽 -->
-        <el-menu-item index="/account/comment/getcomm">获取电影评论</el-menu-item>
-        <el-menu-item index="/account/comment/removecomm">删除评论</el-menu-item>
+        <el-menu-item index="/account/comment/getcomm">电影评论管理</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <!-- 具名插槽 -->
@@ -35,8 +34,7 @@
         </template>
         <!-- 匿名插槽 -->
         <el-menu-item index="/account/film/addfilm">添加电影</el-menu-item>
-        <el-menu-item index="/account/film/delfilm">删除电影</el-menu-item>
-        <el-menu-item index="/account/film/getfilminfo">电影详情查询</el-menu-item>
+        <el-menu-item index="/account/film/getfilminfo">电影操作</el-menu-item>
       </el-submenu>
        <el-submenu index="3">
         <!-- 具名插槽 -->

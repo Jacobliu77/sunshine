@@ -35,7 +35,7 @@ request.interceptors.request.use(function (config) {
     // 后端要求把 token 放到请求头中，使用名字 Authorization 指定
     // config.headers 用来获取本次的请求头对象，这是 axios 的固定 API
     // 注意，后端要求的 token 数据格式为：Bearer token数据，要注意 Bearer 后面有一个空格
-    config.headers.Authorization = `Bearer ${user.token}`
+    config.headers.Authorization = `Bearer ${user}`
   }
   return config
 }, function (error) {

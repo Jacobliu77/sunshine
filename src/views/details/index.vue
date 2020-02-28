@@ -268,12 +268,10 @@ export default {
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
-      console.log(this.stylechannel)
     },
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
-      console.log(this.addresschannel)
     },
     starLevel (evaluate) {
       return evaluate / 2 // 最高评分为10，星级只有5级 所以需要除2，再四舍五入获取评分数
