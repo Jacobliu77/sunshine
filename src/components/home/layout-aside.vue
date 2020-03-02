@@ -44,7 +44,6 @@
         </template>
         <!-- 匿名插槽 -->
         <el-menu-item index="/account/userinfo">账户信息</el-menu-item>
-        <el-menu-item index="/account/del">账户删除</el-menu-item>
         <el-menu-item index="/account/resetpass">密码安全</el-menu-item>
       </el-submenu>
       <el-submenu index="4">
@@ -54,7 +53,7 @@
           <span>管理员账户操作</span>
         </template>
         <!-- 匿名插槽 -->
-        <el-menu-item index="/account/admin/find">用户账户查询</el-menu-item>
+        <el-menu-item index="/account/admin/del">用户账户查询与操作</el-menu-item>
         <el-menu-item index="/account/admin/all">用户账户信息获取</el-menu-item>
       </el-submenu>
     </el-menu>

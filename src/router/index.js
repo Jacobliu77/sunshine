@@ -60,8 +60,8 @@ const routes = [
         component: () => import('../views/account/account/resetpass.vue')
       },
       {
-        path: 'del', // 删除账户
-        component: () => import('../views/account/account/del.vue')
+        path: 'admin/del', // 账户操作
+        component: () => import('../views/account/admin/del.vue')
       },
       {
         path: 'comment/getcomm', // 获取电影评论
