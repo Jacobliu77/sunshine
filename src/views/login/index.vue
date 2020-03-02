@@ -60,6 +60,17 @@ export default {
           account: this.formdata.mobile,
           password: this.formdata.code
         })
+        if (res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '账户登录成功!'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: `账户登录失败！${res.data.error}`
+          })
+        }
         // console.log(res.data)
         window.localStorage.setItem('user-token', res.data.data.token)
         window.localStorage.setItem('isAdmin', res.data.data.isAdmin)
@@ -70,7 +81,7 @@ export default {
           this.$message.success(res.data.data.msg)
           this.$router.push('/home')
         } else {
-          this.$message.error(res.data.error)
+          this.$message.error(res.error)
         }
       } catch (err) {
         this.$message.error(err)

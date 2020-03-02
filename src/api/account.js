@@ -19,7 +19,7 @@ export const updateInfo = fd => {
 export const repassword = fd => {
   return request({
     method: 'POST',
-    url: `/movie/account/`,
+    url: `/movie/account/reset`,
     data: fd
   })
 }

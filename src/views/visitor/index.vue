@@ -40,6 +40,10 @@
       </el-menu>
     </el-header>
     <el-main>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="用户管理" name="first">账户信息修改</el-tab-pane>
+        <el-tab-pane label="配置管理" name="second">密码重置</el-tab-pane>
+      </el-tabs>
      <el-card>
     <bread-crumb slot="header">
       <template slot="title">个人信息更新</template>
