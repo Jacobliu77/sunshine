@@ -10,16 +10,28 @@ export const getuserinfo = params => {
   })
 }
 export const updateInfo = fd => {
-  console.log(fd)
   return request({
     method: 'PUT',
     url: `/movie/account/update`,
     data: fd
   })
 }
+export const repassword = fd => {
+  return request({
+    method: 'POST',
+    url: `/movie/account/`,
+    data: fd
+  })
+}
 export const delfilm = params => {
   return request({
     method: 'DELETE',
-    url: `/movie/${params}`
+    url: `/movie/account/${params}`
+  })
+}
+export const open = params => {
+  return request({
+    method: 'GET',
+    url: `/movie/account/reopen/${params}`
   })
 }

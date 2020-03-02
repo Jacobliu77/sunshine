@@ -33,8 +33,8 @@
       </el-form-item>
        <span style="font-size:28px;margin-left:9%;"> 当前用户状态</span> <i :class=" status==='NORMAL'? classt:classf" style="font-size:28px"></i>
       <el-form-item style="margin-top:20px">
-        <el-button type="primary" disabled >解除封禁</el-button>
-        <el-button type="danger" @click="open">封禁账户</el-button>
+        <el-button type="primary" @click="opena" :disabled="status==='NORMAL'? true:false" >解除封禁</el-button>
+        <el-button type="danger" @click="open" :disabled="status==='NORMAL'?false:true " >封禁账户</el-button>
       </el-form-item>
     </el-form>
     <div class="imgblock">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getuserinfo, delfilm } from '@/api/account.js'
+import { getuserinfo, delfilm, open } from '@/api/account.js'
 export default {
   data () {
     return {
@@ -94,7 +94,23 @@ export default {
       } else {
         this.$message({
           type: 'error',
-          message: `保存用户信息失败！${data.error}`
+          message: `账户封禁失败！${data.error}`
+        })
+      }
+    },
+    async openacco () {
+      const id = this.idinput
+      const { data } = await open(id)
+      if (data.code === 200) {
+        this.$message({
+          type: 'success',
+          message: '账户解封成功!'
+        })
+        this.getuserinfo(id)
+      } else {
+        this.$message({
+          type: 'error',
+          message: `账户解封失败！${data.error}`
         })
       }
     },
@@ -105,6 +121,20 @@ export default {
         type: 'warning'
       }).then(() => {
         this.delacco()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    opena () {
+      this.$confirm('此操作将封禁账户解除封禁, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.openacco()
       }).catch(() => {
         this.$message({
           type: 'info',
