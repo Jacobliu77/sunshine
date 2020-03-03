@@ -10,6 +10,7 @@ export default new Vuex.Store({
     isforder: false,
     searchkeywords: '',
     active: '',
+    keyid: 5,
     accountid: getItem('accountid')
   },
   mutations: {

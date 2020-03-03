@@ -15,6 +15,13 @@ export const getidComm = id => {
     url: `/movie/comment/${id}`
   })
 }
+export const commitcomm = fd => {
+  return request({
+    method: 'POST',
+    url: `/movie/comment`,
+    body: fd
+  })
+}
 export const delComm = params => {
   return request({
     method: 'DELETE',

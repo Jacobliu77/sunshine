@@ -84,10 +84,14 @@
              <p style="font-size:25px;margin-top:-5px;font-weight:700">精彩快播</p>
               <el-divider></el-divider>
              <video src="../../assets/video/test.mp4" controls></video>
+             <el-divider></el-divider>
+             <h2 style="text-align:left;margin-left:40px">发表我的观点</h2>
+                <el-input class="texta" type="textarea" rows="5" v-model="mycomm"></el-input>
+                <el-button type="primary" style="margin-top:20px" @click="onSubmit">立即发表</el-button>
             </el-card>
           </el-col>
           <el-col :span="6">
-            <el-card shadow="always">
+            <el-card shadow="always" style="height:900px;overflow:scroll">
             <p style="font-size:25px;margin-top:-5px;font-weight:700">相关评论</p>
              <el-divider></el-divider>
              <el-timeline>
@@ -216,10 +220,11 @@
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
 import { getfilminfo } from '@/api/film.js'
-import { getidComm } from '@/api/comment.js'
+import { getidComm, commitcomm } from '@/api/comment.js'
 export default {
   data () {
     return {
+      id: '',
       imgurl: '../../assets/img/testbig.jpg',
       videourl: '',
       activeIndex: '1',
@@ -231,29 +236,7 @@ export default {
       sort: '',
       showscore: 0,
       infodata: {},
-      activities: [{
-        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
-        timestamp: '上映后30天 2020-01-18'
-      }, {
-        content: '通过审核',
-        timestamp: '上映后29天 2020-01-17'
-      }, {
-        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
-        timestamp: '上映后23天 2020-01-11'
-      }, {
-        content: '创建成功',
-        timestamp: '上映后23天 2020-01-11'
-      }, {
-        content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
-        timestamp: '上映后23天 2020-01-11'
-      }, {
-        content: '《叶问4：完结篇》票房破11亿 刷新功夫电影纪录',
-        timestamp: '上映后23天 2020-01-11'
-      }, {
-        content: '《叶问4：完结篇》票房破11亿 刷新功夫电影纪录',
-        timestamp: '上映后23天 2020-01-11'
-      }
-      ]
+      mycomm: ''
     }
   },
   methods: {
@@ -276,7 +259,7 @@ export default {
       this.commData = data.data.items
     },
     async getidfilm (id) {
-      const { data } = await getfilminfo(5)
+      const { data } = await getfilminfo(id)
       if (data.code === 200) {
         this.infodata = data.data
       } else {
@@ -286,19 +269,39 @@ export default {
         })
       }
     },
+    async onSubmit () {
+      const fd = {}
+      fd.movie_id = this.id
+      fd.account_name = window.localStorage.getItem('user-account')
+      fd.content = this.mycomm
+      console.log(fd)
+      const { data } = await commitcomm(fd)
+      if (data.code === 200) {
+        this.$message({
+          type: 'success',
+          message: '评论发表成功！！'
+        })
+        this.getidcomm(this.id)
+      } else {
+        this.$message({
+          type: 'error',
+          message: '评论发表失败' + data.error
+        })
+      }
+    },
     starLevel (evaluate) {
       return evaluate / 2 // 最高评分为10，星级只有5级 所以需要除2，再四舍五入获取评分数
     }
   },
   created () {
+    this.id = this.$store.state.keyid
     this.loadStyleChannels()
     this.loadAddresChannels()
-    this.getidfilm()
-    this.getidcomm()
+    this.getidfilm(this.id)
+    this.getidcomm(this.id)
     // vue 数据获取存在时间问题
     setTimeout(() => {
       this.showscore = this.starLevel(parseInt(this.infodata.score))
-      console.log(this.showscore)
     }, 400)
   }
 }
@@ -396,6 +399,9 @@ body > .el-container {
   .bottom {
     .el-card__header {
       padding: 0 10px;
+    }
+    .texta {
+      resize:none;
     }
   }
 }
