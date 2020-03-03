@@ -16,10 +16,11 @@ export const getidComm = id => {
   })
 }
 export const commitcomm = fd => {
+  console.log(fd)
   return request({
     method: 'POST',
     url: `/movie/comment`,
-    body: fd
+    data: fd
   })
 }
 export const delComm = params => {

@@ -255,7 +255,7 @@ export default {
       this.addresschannel = data.data.items
     },
     async getidcomm (id) {
-      const { data } = await getidComm(2)
+      const { data } = await getidComm(id)
       this.commData = data.data.items
     },
     async getidfilm (id) {
