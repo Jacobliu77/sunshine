@@ -50,34 +50,29 @@
             <div class="bottombanner"></div>
             <div class="toptext">
                 <div class="left">
-                    <img src="../../assets/img/testbig.jpg" alt="">
+                    <img :src="infodata.picture_url?infodata.picture_url:imgurl" alt="">
                 </div>
                 <div class="right">
                     <div class="right-title">
-                        <h1 style="font-size:38px;line-hight:40px">叶问4：完结篇 (2019) <span style="font-size:34px;color:yellow;margin-left:30px">7.8</span> </h1>
-                        <h3 style="font-size:22px">Ip Man 4  <a href="#" style="text-decoration: none;color:#fff;margin-left:10px">更多别名></a></h3>
+                        <h1 style="font-size:38px;line-hight:40px">{{infodata.name}} <span style="font-size:34px;color:yellow;margin-left:30px">{{infodata.score}}</span> </h1>
+                        <h3 style="font-size:22px">{{infodata.hits}}<a href="#" style="text-decoration: none;color:#fff;margin-left:10px">次点击</a></h3>
                     </div>
                     <div class="right-main">
                        <div>
                           <span style="font-size:25px">导演：</span>
-                          <span>叶伟信</span>
+                          <span>{{infodata.director}}</span>
                       </div>
                       <div style="margin-top:15px">
                           <span style="font-size:22px;margin-top:30px">演员列表:  </span>
-                          <el-divider direction="vertical"></el-divider>
-                          <span>胡歌</span>
-                          <el-divider direction="vertical"></el-divider>
-                          <span>刘亦菲</span>
+                            <span  v-for="(item,index) in infodata.actors " :key="index">{{item}} | </span>
                       </div>
                       <el-rate
                         v-model="showscore"
                         disabled
                         style="margin:15px 0 ;font-size:25px;display:inline-block">
-                      </el-rate><span style="font-size:25px;color: rgb(243, 213, 44);">{{score}} 分</span>
+                      </el-rate><span style="font-size:25px;color: rgb(243, 213, 44);">{{infodata.score}} 分</span>
                        <div class="plot">
-                          <p>《叶问4》讲述了叶师傅1964年到美国的一段生活经历，发现华人在美国遭受洋人
-                            的欺压和凌辱愈加严重，危难之中，叶问再次挺身而出，让世界看到我们的态度：谈，
-                            可以；打，奉陪！“</p>
+                          <p>{{infodata.introduce}}</p>
                       </div>
                     </div>
                 </div>
@@ -93,13 +88,13 @@
           </el-col>
           <el-col :span="6">
             <el-card shadow="always">
-            <p style="font-size:25px;margin-top:-5px;font-weight:700">相关新闻</p>
+            <p style="font-size:25px;margin-top:-5px;font-weight:700">相关评论</p>
              <el-divider></el-divider>
              <el-timeline>
               <el-timeline-item
-                v-for="(activity, index) in activities"
+                v-for="(activity, index) in commData"
                 :key="index"
-                :timestamp="activity.timestamp">
+                :timestamp="activity.create_time">
                 {{activity.content}}
               </el-timeline-item>
             </el-timeline>
@@ -220,19 +215,22 @@
 
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
-
+import { getfilminfo } from '@/api/film.js'
+import { getidComm } from '@/api/comment.js'
 export default {
   data () {
     return {
+      imgurl: '../../assets/img/testbig.jpg',
+      videourl: '',
       activeIndex: '1',
       stylechannel: [],
       addresschannel: [],
       filters: [],
+      commData: [],
       type: 'info',
       sort: '',
-      score: 7.8,
       showscore: 0,
-      currentDate: new Date(),
+      infodata: {},
       activities: [{
         content: '《叶问4》破11亿 海外票房抢眼刷新马来西亚纪录',
         timestamp: '上映后30天 2020-01-18'
@@ -273,6 +271,21 @@ export default {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
     },
+    async getidcomm (id) {
+      const { data } = await getidComm(2)
+      this.commData = data.data.items
+    },
+    async getidfilm (id) {
+      const { data } = await getfilminfo(5)
+      if (data.code === 200) {
+        this.infodata = data.data
+      } else {
+        this.$message({
+          type: 'error',
+          message: '查询电影信息失败' + data.error
+        })
+      }
+    },
     starLevel (evaluate) {
       return evaluate / 2 // 最高评分为10，星级只有5级 所以需要除2，再四舍五入获取评分数
     }
@@ -280,7 +293,13 @@ export default {
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
-    this.showscore = this.starLevel(this.score)
+    this.getidfilm()
+    this.getidcomm()
+    // vue 数据获取存在时间问题
+    setTimeout(() => {
+      this.showscore = this.starLevel(parseInt(this.infodata.score))
+      console.log(this.showscore)
+    }, 400)
   }
 }
 </script>
@@ -366,7 +385,7 @@ body > .el-container {
               background: url('../../assets/img/001.png')no-repeat;
               background-size: contain;
               p {
-                padding: 38px 25px 25px 103px;
+                padding: 30px 25px 25px 103px;
                 line-height: 30px;
                 font-size: 15px;
               }
