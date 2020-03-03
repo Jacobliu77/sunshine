@@ -31,7 +31,14 @@ export const delfilm = params => {
 }
 export const open = params => {
   return request({
+    method: 'PUT',
+    url: `/movie/account/reopen?id=${params}`
+  })
+}
+export const getall = params => {
+  return request({
     method: 'GET',
-    url: `/movie/account/reopen/${params}`
+    url: `/movie/account/list`,
+    params
   })
 }
