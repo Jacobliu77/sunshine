@@ -76,10 +76,11 @@
       <el-row type="flex" class="row-bg" justify="space-around">
           <el-col :span="4">
             <div class="top" >1</div>
-            <el-card id=6 :body-style="{ padding: '0px' }">
+            <el-card :body-style="{ padding: '0px' }">
           <img
             src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583333828791&di=114d98ce128116c02a50d68e695c96ea&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F202fa81329a57daac9fce253907845ca611b0aae1bb85-Tqfz3j_fw658"
             class="image"
+           @click="godetails(6)"
           />
           <div style="padding: 14px;">
             <span style="font-weight:700;font-size:22px" >肖申克的救赎</span>  <span style="color:orange"> 9.7分</span>
@@ -95,6 +96,7 @@
           <img
             src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2916036695,1359483048&fm=26&gp=0.jpg"
             class="image"
+            @click="godetails(7)"
           />
           <div style="padding: 14px;">
             <span style="font-weight:700;font-size:22px" >霸王别姬</span>  <span style="color:orange"> 9.6分</span>
@@ -110,6 +112,7 @@
           <img
             src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583334443290&di=7eaf862ac4c299fffeef57d1f8f82d24&imgtype=0&src=http%3A%2F%2Fwx2.sinaimg.cn%2Fmw690%2Fe4be24adgy1fqk82zgifoj21ig2bckjl.jpg"
             class="image"
+            @click="godetails(9)"
           />
           <div style="padding: 14px;">
             <span style="font-weight:700;font-size:22px" >控方证人</span>  <span style="color:orange"> 9.6分</span>
@@ -124,6 +127,7 @@
           <img
             src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583338557734&di=88238d47962a57f453784bcb43bc5439&imgtype=0&src=http%3A%2F%2Fmov.tw.mm52.com%2F1998%2Felizabeth%2Felizabeth_0001_620px.jpg"
             class="image"
+            @click="godetails(8)"
           />
           <div style="padding: 14px;">
              <span style="font-weight:700;font-size:22px" >伊丽莎白</span>  <span style="color:orange"> 9.6分</span>
@@ -138,6 +142,7 @@
           <img
             src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583334244343&di=2e009ea1a48ffdc95ed9104a39a47797&imgtype=0&src=http%3A%2F%2Fa1.att.hudong.com%2F47%2F37%2F19300001208995130320373359586.jpg"
             class="image"
+            @click="godetails(5)"
           />
           <div style="padding: 14px;">
              <span style="font-weight:700;font-size:22px" >阿甘正传</span>  <span style="color:orange"> 9.5分</span>
@@ -281,6 +286,10 @@ export default {
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
+    },
+    godetails (id) {
+      this.$store.state.keyid = id
+      this.$router.push('/details')
     },
     // 获取时下新闻
     async getnewsall () {

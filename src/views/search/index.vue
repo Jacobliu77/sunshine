@@ -96,7 +96,7 @@
             <el-option value="选项3" label="好评"></el-option>
           </el-select>
         </div>
-       <el-row type="flex" class="row-bg" justify="space-around">
+       <div style="display:flex;justify:space-around;flex-wrap: wrap;"  class="row-bg" >
           <el-col :span="4" v-for="item in filmitems" :key="item.id" >
             <el-card :body-style="{ padding: '0px' }">
           <img
@@ -111,7 +111,7 @@
           </div>
           </el-card>
           </el-col>
-        </el-row>
+        </div>
         <el-divider></el-divider>
         <el-pagination background layout="prev, pager, next"  :page-count="totalpage"
         :current-page.sync="currentPage"
