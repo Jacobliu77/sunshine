@@ -22,3 +22,9 @@ export const delfilm = params => {
     url: `/movie/${params}`
   })
 }
+export const searchfilm = params => {
+  return request({
+    method: 'GET',
+    url: `/movie/search?name=${params}`
+  })
+}

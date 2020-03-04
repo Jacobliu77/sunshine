@@ -50,7 +50,7 @@
             <div slot="header" class="clearfix">
               <span class="hh">新闻要闻</span>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">{{o +'.'}}</div>
+            <div v-for="(item,index) in newsa" :key="index" class="text item">{{item}}</div>
           </el-card>
         </el-col>
         <el-col :span="7">
@@ -58,96 +58,91 @@
             <div slot="header" class="clearfix">
               <span class="hh">新闻快讯</span>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">{{o +'.'}}</div>
+            <div v-for="(item,index) in newsb" :key="index" class="text item">{{item}}</div>
           </el-card>
         </el-col>
         <el-col :span="7">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span class="hh">明星要闻</span>
+              <span class="hh">最热电视剧</span>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">{{o +'.'}}</div>
+            <div v-for="(item,index) in hotfilm" :key="index" class="text item">{{item}}</div>
           </el-card>
         </el-col>
       </el-row>
       </template>
       <el-divider></el-divider>
-      <h2 style="text-align:left;padding-left:45px"><i class="el-icon-video-camera-solid"></i> 最热推荐</h2>
+      <h2 style="text-align:left;padding-left:45px"><i class="el-icon-video-camera-solid"></i> 评分最高</h2>
       <el-row type="flex" class="row-bg" justify="space-around">
           <el-col :span="4">
             <div class="top" >1</div>
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card id=6 :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583333828791&di=114d98ce128116c02a50d68e695c96ea&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F202fa81329a57daac9fce253907845ca611b0aae1bb85-Tqfz3j_fw658"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span style="font-weight:700;font-size:22px" >肖申克的救赎</span>  <span style="color:orange"> 9.7分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+               <span>由 弗兰克·德拉邦特 导演</span>
             </div>
           </div>
         </el-card>
           </el-col>
           <el-col :span="4">
             <div class="top bb" >2</div>
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card id=7 :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2916036695,1359483048&fm=26&gp=0.jpg"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span style="font-weight:700;font-size:22px" >霸王别姬</span>  <span style="color:orange"> 9.6分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+               <span>由 陈凯歌 导演</span>
             </div>
           </div>
         </el-card>
           </el-col>
            <el-col :span="4">
              <div class="top cc" >3</div>
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card id=9 :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583334443290&di=7eaf862ac4c299fffeef57d1f8f82d24&imgtype=0&src=http%3A%2F%2Fwx2.sinaimg.cn%2Fmw690%2Fe4be24adgy1fqk82zgifoj21ig2bckjl.jpg"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span style="font-weight:700;font-size:22px" >控方证人</span>  <span style="color:orange"> 9.6分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+               <span>由 比利·怀德 导演</span>
             </div>
           </div>
         </el-card>
           </el-col>
           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card id=8 :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583338557734&di=88238d47962a57f453784bcb43bc5439&imgtype=0&src=http%3A%2F%2Fmov.tw.mm52.com%2F1998%2Felizabeth%2Felizabeth_0001_620px.jpg"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+             <span style="font-weight:700;font-size:22px" >伊丽莎白</span>  <span style="color:orange"> 9.6分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+               <span>由 谢加·凯普尔 导演</span>
             </div>
           </div>
         </el-card>
           </el-col>
            <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card id=5 :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583334244343&di=2e009ea1a48ffdc95ed9104a39a47797&imgtype=0&src=http%3A%2F%2Fa1.att.hudong.com%2F47%2F37%2F19300001208995130320373359586.jpg"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+             <span style="font-weight:700;font-size:22px" >阿甘正传</span>  <span style="color:orange"> 9.5分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+               <span>由 罗伯特·泽米吉斯 导演</span>
             </div>
           </div>
         </el-card>
@@ -274,8 +269,9 @@ export default {
       activeIndex: '1',
       stylechannel: [],
       addresschannel: [],
-      hotfilm: [],
-      currentDate: new Date()
+      hotfilm: ['安家', '完美关系', '三生三世十里桃花--枕上书', '想见你'],
+      newsa: ['papi酱生子', '外交部 坚决反对称新冠病毒是中国病毒', '英国再现集装箱藏人案', '甘薇放弃财产优先分配权'],
+      newsb: ['4128万多名党员捐款47.3亿元', '迪丽热巴翻牌', '中国科研团队发现新冠病毒已突变', '新冠肺炎与季节性流感有4大不同']
     }
   },
   methods: {
@@ -285,6 +281,20 @@ export default {
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
+    },
+    // 获取时下新闻
+    async getnewsall () {
+      // 调用删除接口
+      const { data } = await this.$axios({
+        method: 'get',
+        url: `https://www.enlightent.cn/research/top/getWeiboRank.do?type=realTimeHotSearchList`,
+        headers: {
+          'Content-Type': 'application/json', // 设置请求头请求格式为JSON
+          'access_token': this.token // 设置token 其中K名要和后端协调好
+        }
+      })
+      this.newsa = data.slice(1, 5)
+      this.newsb = data.slice(-1, -5)
     },
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
@@ -304,6 +314,7 @@ export default {
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
+    // this.getnewsall()
   }
 }
 </script>
@@ -395,6 +406,7 @@ export default {
 
   .image {
     width: 100%;
+    height: 300px;
     display: block;
   }
 

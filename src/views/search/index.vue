@@ -85,7 +85,7 @@
             style="font-size:17px;margin:10px ;"
           >{{item.style}}</el-tag>
           <span>共</span>
-          <span style="color:blue;font-weight:700">10086</span>
+          <span style="color:blue;font-weight:700">{{ length }}</span>
           <span>条数据</span>
         </div>
         <el-divider></el-divider>
@@ -96,240 +96,28 @@
             <el-option value="选项3" label="好评"></el-option>
           </el-select>
         </div>
-        {{$store.state.active}}
        <el-row type="flex" class="row-bg" justify="space-around">
-          <el-col :span="4">
+          <el-col :span="4" v-for="item in filmitems" :key="item.id" >
             <el-card :body-style="{ padding: '0px' }">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="item.picture_url"
             class="image"
           />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span style="font-weight:700;font-size:22px">{{item.name}}   </span>   <span style="color:orange"> {{item.score}}分</span>
             <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+             <span>由 {{item.director}} 导演</span>
             </div>
           </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-        </el-row>
-         <el-row type="flex" class="row-bg" justify="space-around">
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-        </el-row>
-         <el-row type="flex" class="row-bg" justify="space-around">
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-          <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-          </el-col>
-           <el-col :span="4">
-            <el-card :body-style="{ padding: '0px' }">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
+          </el-card>
           </el-col>
         </el-row>
         <el-divider></el-divider>
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination background layout="prev, pager, next"  :page-count="totalpage"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        @current-change="currentChange"
+        :total="totalcomm"></el-pagination>
       </el-card>
     </el-main>
     <el-footer>
@@ -444,22 +232,29 @@
 
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
+import { searchfilm } from '@/api/film.js'
 
 export default {
   data () {
     return {
+      pageSize: 3,
+      totalcomm: 0,
+      currentPage: 0,
+      totalpage: 0,
       activeIndex: '1',
       stylechannel: [],
       addresschannel: [],
       filters: [],
       type: 'info',
       sort: '',
+      filmitems: [],
+      length: 10,
       currentDate: new Date()
     }
   },
   methods: {
     onsearch () {
-      console.log('触发了搜索事件')
+      this.getfilm()
     },
     handleSelect (key, keyPath) {
       this.$store.state.active = key
@@ -467,17 +262,22 @@ export default {
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
       this.stylechannel = data.data.items
-      console.log(this.stylechannel)
     },
     async loadAddresChannels () {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
-      console.log(this.addresschannel)
+    },
+    async getfilm () {
+      const name = this.$store.state.searchkeywords
+      const { data } = await searchfilm(name)
+      this.filmitems = data.data.items
     }
   },
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
+    this.getfilm()
+    this.length = this.filmitems.length()
   }
 }
 </script>
