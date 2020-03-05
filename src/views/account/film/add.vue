@@ -24,7 +24,14 @@
         <el-input v-model="formData.picture" style="width:40%"></el-input>
       </el-form-item>
       <el-form-item label="区域" prop="area">
-        <el-input v-model="formData.area" style="width:40%" ></el-input>
+         <el-select v-model="formData.area"  style="width:40%" placeholder="请选择区域">
+            <el-option
+              v-for="item in areaoptions"
+              :key="item.id"
+              :label="item.area"
+              :value="item.area">
+            </el-option>
+          </el-select>
       </el-form-item>
        <el-form-item label="简介" prop="introduce">
         <el-input type="textarea"
@@ -40,7 +47,21 @@
         <el-input v-model="actors" placeholder="请依次输入演员姓名以逗号分开" style="width:40%" ></el-input>
       </el-form-item>
        <el-form-item label="风格类型" prop="types">
-        <el-input v-model="types" placeholder="请依次输入风格类型以逗号分开" style="width:40%" ></el-input>
+         <el-select
+            v-model="formData.types"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择类型标签" style="width:40%">
+            <el-option
+              v-for="item in typeoptions"
+              :key="item.id"
+              :label="item.style"
+              :value="item.style">
+            </el-option>
+          </el-select>
+        <!-- <el-input v-model="types" placeholder="请依次输入风格类型以逗号分开" style="width:40%" ></el-input> -->
       </el-form-item>
        <el-form-item label="上映时间" prop="release_time">
         <el-date-picker
@@ -52,7 +73,7 @@
       </el-form-item>
       <el-form-item style="text-align:center">
         <el-button type="primary" @click="saveInfo">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="resetForm('myForm')">重置</el-button>
       </el-form-item>
     </el-form>
      <div class="imgblock">
@@ -69,6 +90,7 @@
 </template>
 
 <script>
+import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
 import { savefilminfo } from '@/api/film.js'
 export default {
   data () {
@@ -77,6 +99,8 @@ export default {
       actors: '',
       types: '',
       time: 0,
+      areaoptions: [],
+      typeoptions: [],
       formData: {
         name: '', // 电影名
         director: '', // 导演
@@ -117,12 +141,19 @@ export default {
   methods: {
     saveInfo () {
       this.formData.actors = this.actors.split('，')
-      this.formData.types = this.types.split('，')
       this.formData.release_time = this.time.toString()
       this.$refs.myForm.validate().then(result => {
         //  调用保存接口
         this.savefilm()
       })
+    },
+    async loadAddresChannels () {
+      const { data } = await getAddresChannels()
+      this.areaoptions = data.data.items
+    },
+    async loadStyleChannels () {
+      const { data } = await getStyleChannels()
+      this.typeoptions = data.data.items
     },
     async savefilm () {
       const fd = this.formData
@@ -140,8 +171,13 @@ export default {
       }
     },
     resetForm (formName) {
+      this.actors = ''
       this.$refs[formName].resetFields()
     }
+  },
+  created () {
+    this.loadAddresChannels()
+    this.loadStyleChannels()
   }
 }
 </script>

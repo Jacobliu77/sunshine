@@ -81,11 +81,11 @@
             v-for="(item,index) in stylechannel"
             :key="index"
             :index="`3-${item.id}`"
-            closable="true"
+            :closable=true
             style="font-size:17px;margin:10px ;"
           >{{item.style}}</el-tag>
           <span>共</span>
-          <span style="color:blue;font-weight:700">{{ length }}</span>
+          <span style="color:blue;font-weight:700">{{ filmitems.length }}</span>
           <span>条数据</span>
         </div>
         <el-divider></el-divider>
@@ -97,11 +97,11 @@
           </el-select>
         </div>
        <div style="display:flex;justify:space-around;flex-wrap: wrap;"  class="row-bg" >
-          <el-col :span="4" v-for="item in filmitems" :key="item.id" >
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card v-for="item in filmitems" :key="item.id" class="maincard" :body-style="{ padding: '0px' }" >
           <img
             :src="item.picture_url"
             class="image"
+            @click="godetails(item.id)"
           />
           <div style="padding: 14px;">
             <span style="font-weight:700;font-size:22px">{{item.name}}   </span>   <span style="color:orange"> {{item.score}}分</span>
@@ -110,7 +110,6 @@
             </div>
           </div>
           </el-card>
-          </el-col>
         </div>
         <el-divider></el-divider>
         <el-pagination background layout="prev, pager, next"  :page-count="totalpage"
@@ -247,9 +246,8 @@ export default {
       filters: [],
       type: 'info',
       sort: '',
-      filmitems: [],
-      length: 10,
-      currentDate: new Date()
+      filmitems: []
+      // currentDate: new Date()
     }
   },
   methods: {
@@ -267,17 +265,23 @@ export default {
       const { data } = await getAddresChannels()
       this.addresschannel = data.data.items
     },
+    godetails (id) {
+      this.$store.state.keyid = id
+      this.$router.push('/details')
+    },
     async getfilm () {
       const name = this.$store.state.searchkeywords
       const { data } = await searchfilm(name)
       this.filmitems = data.data.items
+    },
+    currentChange () {
+
     }
   },
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
     this.getfilm()
-    this.length = this.filmitems.length()
   }
 }
 </script>
@@ -331,11 +335,6 @@ body > .el-container {
     float: right;
   }
 
-  .image {
-    width: 100%;
-    display: block;
-  }
-
   .clearfix:before,
   .clearfix:after {
       display: table;
@@ -352,6 +351,16 @@ body > .el-container {
   }
   .row-bg {
     padding: 10px 0;
+  }
+}
+.maincard {
+  width: 300px;
+  height: 500px;
+  margin: 30px 1.85%;
+   .image {
+    width: 100%;
+    height: 430px;
+    display: block;
   }
 }
 .el-col {

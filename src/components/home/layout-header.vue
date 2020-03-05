@@ -50,7 +50,7 @@ export default {
       } else {
         //    退出
         window.localStorage.removeItem('user-token') // 删除令牌
-        this.$router.push('/login') // 回到登录页
+        this.$router.push('/') // 回到登录页
       }
     }
   }
