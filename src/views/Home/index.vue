@@ -17,18 +17,18 @@
         <el-submenu index="2">
           <template slot="title">风格选电影</template>
           <el-menu-item
-            v-for="(item,index) in stylechannel"
-            :key="index"
-            :index="`2-${item.id}`"
+            v-for="(item) in stylechannel"
+            :key="item.id"
+            :index="item.style"
             @click="$router.push('/search')"
           >{{item.style}}</el-menu-item>
         </el-submenu>
         <el-submenu  index="3">
           <template slot="title">位置选电影</template>
           <el-menu-item
-            v-for="(item,index) in addresschannel"
-            :key="index"
-            :index="`3-${item.id}`"
+            v-for="(item) in addresschannel"
+            :key="item.id"
+            :index="item.area"
             @click="$router.push('/search')"
           >{{item.area}}</el-menu-item>
         </el-submenu>
@@ -281,7 +281,7 @@ export default {
   },
   methods: {
     handleSelect (key, keyPath) {
-      this.$store.state.active = key
+      this.$store.state.selectindex = key
     },
     async loadStyleChannels () {
       const { data } = await getStyleChannels()

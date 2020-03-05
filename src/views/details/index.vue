@@ -20,6 +20,7 @@
             v-for="(item,index) in stylechannel"
             :key="index"
             :index="`2-${item.id}`"
+             @click="$router.push('/search')"
           >{{item.style}}</el-menu-item>
         </el-submenu>
         <el-submenu @click="$router.push('/search')" index="3">
@@ -28,6 +29,7 @@
             v-for="(item,index) in addresschannel"
             :key="index"
             :index="`3-${item.id}`"
+             @click="$router.push('/search')"
           >{{item.area}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="4" @click="$router.push('/account')">个人中心</el-menu-item>

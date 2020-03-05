@@ -43,7 +43,7 @@ export default {
     // 点击菜单项时触发
     clickMenu (command) {
       if (command === 'info') {
-        this.$router.push('/home/userinfo') // 个人中心
+        this.$router.push('/account/userinfo') // 个人中心
       } else if (command === 'git') {
         //   跳转到git地址
         window.location.href = 'https://github.com/Jacobliu77/'

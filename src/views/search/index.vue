@@ -14,20 +14,20 @@
           <img src="../../assets/img/icon.png" alt />
         </el-menu-item>
         <el-menu-item @click="$router.push('/home')" index="1">首页</el-menu-item>
-        <el-submenu @click="$router.push('/search')" index="2">
+        <el-submenu index="2">
           <template slot="title">风格选电影</template>
           <el-menu-item
-            v-for="(item,index) in stylechannel"
-            :key="index"
-            :index="`2-${item.id}`"
+            v-for="(item) in stylechannel"
+           :key="item.id"
+            :index="item.style"
           >{{item.style}}</el-menu-item>
         </el-submenu>
-        <el-submenu @click="$router.push('/search')" index="3">
+        <el-submenu index="3">
           <template slot="title">位置选电影</template>
           <el-menu-item
-            v-for="(item,index) in addresschannel"
-            :key="index"
-            :index="`3-${item.id}`"
+            v-for="(item) in addresschannel"
+            :key="item.id"
+            :index="item.area"
           >{{item.area}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="4" @click="$router.push('/account')">个人中心</el-menu-item>
@@ -58,6 +58,7 @@
             :key="index"
             :index="`3-${item.id}`"
             :type="type"
+            @click="handleareaAdd(item.area)"
             style="font-size:17px;margin-left:10px ;"
           >{{item.area}}</el-tag>
         </div>
@@ -71,6 +72,7 @@
             :key="index"
             :index="`3-${item.id}`"
             :type="type"
+            @click="handlestyleAdd(item.style)"
             style="font-size:17px;margin-left:10px ;"
           >{{item.style}}</el-tag>
         </div>
@@ -78,22 +80,23 @@
           <span>已为您筛选条件为：</span>
           <el-divider direction="vertical"></el-divider>
           <el-tag
-            v-for="(item,index) in stylechannel"
+            v-for="(item,index) in filters"
             :key="index"
-            :index="`3-${item.id}`"
+            :index="item"
             :closable=true
+            @close="handleClose(item)"
             style="font-size:17px;margin:10px ;"
-          >{{item.style}}</el-tag>
+          >{{item}}</el-tag>
           <span>共</span>
           <span style="color:blue;font-weight:700">{{ filmitems.length }}</span>
           <span>条数据</span>
         </div>
         <el-divider></el-divider>
         <div style="text-align:left;font-size:18px;margin-left:40px">
-          <el-select v-model="sort" placeholder="请选择排序方式">
-            <el-option value="选项1" label="最新"></el-option>
-            <el-option value="选项2" label="最热"></el-option>
-            <el-option value="选项3" label="好评"></el-option>
+          <el-select v-model="sort" placeholder="请选择排序方式" @change="getsortfilm">
+            <el-option value="0" label="最新"></el-option>
+            <el-option value="1" label="最热"></el-option>
+            <el-option value="2" label="好评"></el-option>
           </el-select>
         </div>
        <div style="display:flex;justify:space-around;flex-wrap: wrap;"  class="row-bg" >
@@ -231,7 +234,7 @@
 
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
-import { searchfilm } from '@/api/film.js'
+import { searchfilm, sortserchfilm } from '@/api/film.js'
 
 export default {
   data () {
@@ -240,6 +243,10 @@ export default {
       totalcomm: 0,
       currentPage: 0,
       totalpage: 0,
+      areaserch: '',
+      styleserch: '',
+      selectarea: '',
+      selecttype: '',
       activeIndex: '1',
       stylechannel: [],
       addresschannel: [],
@@ -256,6 +263,26 @@ export default {
     },
     handleSelect (key, keyPath) {
       this.$store.state.active = key
+    },
+    handleClose (tag) {
+      this.filters.splice(this.filters.indexOf(tag), 1)
+      this.getsortfilm()
+    },
+    handleareaAdd (tag) {
+      this.areaserch = tag
+      this.filters = []
+      this.filters.push(tag)
+      this.getsortfilm()
+    },
+    handlestyleAdd (tag) {
+      this.filters.push(tag)
+      this.getsortfilm()
+    },
+    handleSelecttype (key) {
+      this.selecttype = key
+    },
+    handleSelectarea (key) {
+      this.selectarea = key
     },
     async loadStyleChannels () {
       const { data } = await getStyleChannels()
@@ -274,6 +301,23 @@ export default {
       const { data } = await searchfilm(name)
       this.filmitems = data.data.items
     },
+    async getsortfilm () {
+      const area = this.areaserch
+      const sort = this.sort
+      const { data } = await sortserchfilm(area, sort)
+      if (data.code === 200) {
+        this.filmitems = data.data.items
+        this.$message({
+          type: 'success',
+          message: '分类获取电影成功'
+        })
+      } else {
+        this.$message({
+          type: 'error',
+          message: '分类获取电影失败原因是' + data.error
+        })
+      }
+    },
     currentChange () {
 
     }
@@ -282,6 +326,7 @@ export default {
     this.loadStyleChannels()
     this.loadAddresChannels()
     this.getfilm()
+    this.filters.push(this.$store.state.selectindex)
   }
 }
 </script>

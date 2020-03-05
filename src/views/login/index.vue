@@ -6,8 +6,12 @@
         <el-form-item prop="mobile">
           <el-input v-model="formdata.mobile" placeholder="请输入账号（必须手机号码）" class="mobile"></el-input>
         </el-form-item>
-        <el-form-item prop="code">
+        <el-form-item prop="code" v-if="codeshow">
           <el-input type="password" v-model="formdata.code" placeholder="请输入密码" class="code"></el-input>
+        </el-form-item>
+         <el-form-item prop="code" v-else>
+          <el-input  v-model="formdata.pcode" placeholder="请输入验证码" class="pcode"></el-input>
+          <el-button plain style="float:right">发送验证码</el-button>
         </el-form-item>
         <el-form-item prop="check">
           <el-checkbox v-model="formdata.check" class="check">我已阅读用户协议且同意上述条款</el-checkbox>
@@ -29,9 +33,11 @@ export default {
       value ? callBack() : callBack(new Error('您必须同意无条件被我们蒙骗'))
     }
     return {
+      codeshow: true,
       formdata: {
         mobile: '',
         code: '',
+        pcode: '',
         check: false
       },
       loginRules: {
@@ -118,4 +124,8 @@ export default {
     }
   }
 }
+.pcode {
+      float: left;
+      width: 70%;
+    }
 </style>
