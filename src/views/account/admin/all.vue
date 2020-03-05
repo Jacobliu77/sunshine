@@ -32,9 +32,9 @@ import { getall } from '@/api/account.js'
 export default {
   data () {
     return {
-      pageSize: 3,
+      pageSize: 5,
       totalcomm: 0,
-      currentPage: 0,
+      currentPage: 1,
       totalpage: 0,
       accoinfoData: [
       ]
@@ -42,11 +42,9 @@ export default {
   },
   methods: {
     async getallinfo () {
-      const pm = {
-        page: this.currentPage,
-        pageSize: this.pageSize
-      }
-      const { data } = await getall(pm)
+      const page = (this.currentPage) - 1
+      const pageSize = this.pageSize
+      const { data } = await getall(page, pageSize)
       this.accoinfoData = data.data.items
       this.totalcomm = data.data.total_elements
       this.totalpage = data.data.total_pages

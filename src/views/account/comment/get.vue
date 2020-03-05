@@ -23,7 +23,12 @@
           </el-table-column>
       </el-table>
       <el-divider></el-divider>
-        <el-pagination background layout="prev, pager, next" :page-count="totalpage" :total="totalcomm"></el-pagination>
+        <el-pagination background layout="prev, pager, next"
+         :page-count="totalpage"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        @current-change="currentChange"
+        :total="totalcomm"></el-pagination>
     </el-card>
   </div>
 </template>
@@ -34,7 +39,9 @@ export default {
   data () {
     return {
       idinput: '',
+      pageSize: 8,
       totalcomm: 0,
+      currentPage: 1,
       totalpage: 0,
       commData: [
       ]
@@ -42,7 +49,9 @@ export default {
   },
   methods: {
     async getallcomm () {
-      const { data } = await getComm()
+      const page = (this.currentPage) - 1
+      const pagesize = this.pageSize
+      const { data } = await getComm(page, pagesize)
       this.commData = data.data.items
       this.totalcomm = data.data.total_elements
       this.totalpage = data.data.total_pages
@@ -52,6 +61,9 @@ export default {
       this.commData = data.data.items
       this.totalcomm = data.data.total_elements
       this.totalpage = data.data.total_pages
+    },
+    currentChange () {
+      this.getallcomm()
     },
     async delidcomm (id) {
       await delComm(id)

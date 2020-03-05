@@ -35,10 +35,9 @@ export const open = params => {
     url: `/movie/account/reopen?id=${params}`
   })
 }
-export const getall = params => {
+export const getall = (page, size) => {
   return request({
     method: 'GET',
-    url: `/movie/account/list`,
-    params
+    url: `/movie/account/list?state=NORMAL&page=${page}&pageSize=${size}`
   })
 }

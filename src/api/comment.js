@@ -3,10 +3,10 @@
  */
 import request from '@/utils/request'
 
-export const getComm = () => {
+export const getComm = (page, size) => {
   return request({
     method: 'GET',
-    url: '/movie/comment'
+    url: `/movie/comment?page=${page}&pageSize=${size}`
   })
 }
 export const getidComm = id => {
