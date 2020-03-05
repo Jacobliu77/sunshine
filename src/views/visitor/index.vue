@@ -5,7 +5,6 @@
         :default-active="activeIndex2"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
@@ -40,43 +39,82 @@
       </el-menu>
     </el-header>
     <el-main>
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="用户管理" name="first">账户信息修改</el-tab-pane>
-        <el-tab-pane label="配置管理" name="second">密码重置</el-tab-pane>
-      </el-tabs>
-     <el-card>
-    <bread-crumb slot="header">
-      <template slot="title">个人信息更新</template>
-    </bread-crumb>
-    <el-form
-      :model="formData"
-      status-icon
-      :rules="rules"
-      ref="myForm"
-      label-width="100px"
-      class="demo-ruleForm"
-    >
-      <el-form-item label="用户名" prop="name">
-        <el-input type="text" v-model="formData.name" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="个人简介" prop="info">
-        <el-input type="text" v-model="formData.intro" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="formData.email" style="width:40%"></el-input>
-      </el-form-item>
-      <el-form-item label="手机" prop="mobile">
-        <el-input v-model="formData.mobile" style="width:40%" disabled></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="saveUserInfo">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <el-upload :http-request="uploadImg" class="head-upload" action :show-file-list="true">
-      <img :src="formData.photo ? formData.photo : defaultImg" alt />
-    </el-upload>
-  </el-card>
+        <el-tabs v-model="activeName">
+        <el-tab-pane label="用户管理" name="center">
+        <el-card class="bigcard">
+        <bread-crumb slot="header">
+        <template slot="title">个人信息更新</template>
+        </bread-crumb>
+        <el-form
+          :model="formData"
+          status-icon
+          :rules="rules"
+          ref="myForm"
+          label-width="100px"
+          class="demo-ruleForm"
+          style="text-align:left;margin-left:20px"
+        >
+          <el-form-item label="账号/用户名" prop="account">
+            <el-input type="text" v-model="formData.account" style="width:40%"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" prop="name">
+            <el-input type="text" v-model="formData.name" style="width:40%"></el-input>
+          </el-form-item>
+          <el-form-item label="个人头像" prop="photo">
+            <el-input type="text" v-model="formData.image" placeholder="请输入百度图库图片地址" style="width:40%"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="formData.email" style="width:40%"></el-input>
+          </el-form-item>
+          <el-form-item label="手机" prop="mobile">
+            <el-input v-model="formData.telephone" style="width:40%" ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="saveInfo">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+        <div class="imgblock">
+            <span class="demonstration">个人头像预览</span>
+            <el-image :src="formData.image ? formData.image : picurl">
+              <div slot="placeholder" class="image-slot" style="margin-top:20px">
+                加载中<span class="dot">...</span>
+              </div>
+            </el-image>
+        </div>
+      </el-card></el-tab-pane>
+            <el-tab-pane label="配置管理" name="repass"><el-card>
+        <bread-crumb slot="header">
+          <template slot="title">密码修改中心</template>
+        </bread-crumb>
+          <el-form
+              :model="formdata"
+              status-icon
+              :rules="passrules"
+              ref="myForm"
+              label-width="100px"
+              class="demo-ruleForm"
+              style="text-align:left;margin-left:20px"
+            >
+              <el-form-item label="账号/用户名" prop="account">
+                <el-input type="text" v-model="formdata.account" placeholder="请确认您的账户名" style="width:40%"></el-input>
+              </el-form-item>
+              <el-form-item label="旧密码" prop="old_passwd">
+                <el-input type="password" v-model="formdata.old_passwd" placeholder="请输入旧密码" style="width:40%"></el-input>
+              </el-form-item>
+              <el-form-item label="新密码" prop="new_passwd">
+                <el-input type="password" v-model="formdata.new_passwd" placeholder="请输入新密码" style="width:40%"></el-input>
+              </el-form-item>
+              <el-form-item label="确认新密码" prop="repassword">
+                <el-input type="password" v-model="formdata.repassword" placeholder="请再次确认新密码" style="width:40%"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="repass">提交修改</el-button>
+              </el-form-item>
+            </el-form>
+          </el-card>
+        </el-tab-pane>
+          </el-tabs>
     </el-main>
     <el-footer>
       <footer class="footer" style="width: 100%;">
@@ -190,22 +228,25 @@
 
 <script>
 import { getStyleChannels, getAddresChannels } from '@/api/channel.js'
+import { getuserinfo, updateInfo, repassword } from '@/api/account.js'
 export default {
   data () {
     return {
+      activeName: 'center',
+      picurl: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=347128054,3544728610&fm=26&gp=0.jpg',
       formData: {
-        name: '', // 用户名
-        intro: '', // 简介
-        photo: '', // 头像
-        email: '', // 邮箱
-        mobile: ''
       },
       activeIndex2: '1',
       stylechannel: [],
       addresschannel: [],
       hotfilm: [],
-      currentDate: new Date(),
       defaultImg: '../../../assets/img/icon.png',
+      formdata: {
+        account: '',
+        old_passwd: '',
+        new_passwd: '',
+        repassword: ''
+      },
       rules: {
         name: [
           { required: true, message: '用户名不能为空' },
@@ -222,46 +263,95 @@ export default {
             message: '邮箱格式不正确'
           }
         ]
+      },
+      passrules: {
+        account: [
+          { required: true, message: '用户名不能为空' }
+        ],
+        old_passwd: [
+          { required: true, message: '原有密码不能为空' }
+        ],
+        new_passwd: [
+          { required: true, message: '请输入您的密码' },
+          {
+            pattern: /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/,
+            message: '密码为6-21字母和数字组成'
+          }
+        ],
+        repassword: [
+          { required: true, message: '请确认您的密码' },
+          {
+            pattern: /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,20}$/,
+            message: '密码6-21字母和数字组成'
+          }
+        ]
       }
     }
   },
   methods: {
-    uploadImg (params) {
-      this.loading = true // 打开弹层
-      let data = new FormData()
-      data.append('photo', params.file)
-      this.$axios({
-        url: '/user/photo',
-        method: 'patch',
-        data
-      }).then(result => {
-        this.loading = false // 关闭弹层
-        this.formData.photo = result.data.photo // 给当前的头像赋值
-        // 认为保存成功 => 通知header组件 更新信息
-        // eventBus.$emit('updateUserInfo')
-      })
+    async getuserinfo () {
+      const id = this.$store.state.accountid
+      const { data } = await getuserinfo(id)
+      if (data.code === 200) {
+        this.formData = data.data
+        this.$message({
+          type: 'success',
+          message: '获取用户信息成功！'
+        })
+      } else {
+        this.$message({
+          type: 'error',
+          message: `获取用户信息失败！${data.error}`
+        })
+      }
     },
-    getuserinfo () {
-      this.$axios({
-        url: '/user/profile'
-      }).then(result => {
-        this.formData = result.data
-      })
+    async saveInfo () {
+      let fd = {}
+      fd.account = this.formData.account
+      fd.name = this.formData.name
+      fd.image = this.formData.image
+      fd.email = this.formData.email
+      fd.telephone = this.formData.telephone
+      const id = this.$store.state.accountid
+      const { data } = await updateInfo(fd)
+      if (data.code === 200) {
+        this.$message({
+          type: 'success',
+          message: '保存用户信息成功'
+        })
+        this.getuserinfo(id)
+      } else {
+        this.$message({
+          type: 'error',
+          message: `保存用户信息失败！${data.error}`
+        })
+      }
     },
-    saveUserInfo () {
-      this.$refs.myForm.validate().then(result => {
-        //  调用保存接口
-        this.$axios({
-          url: '/user/profile',
-          method: 'patch',
-          data: this.formData
-        }).then(result => {
+    async repass () {
+      const success =
+        (await this.$refs.myForm.validate()) &&
+        this.formdata.new_passwd === this.formdata.repassword
+      if (success) {
+        const fd = this.formdata
+        // fd.account = this.formdata.account
+        // fd.old_passwd = this.formdata.old_passwd
+        // fd.new_passwd = this.formdata.new_passwd
+        const { data } = await repassword(fd)
+        if (data.code === 200) {
           this.$message({
             type: 'success',
-            message: '保存用户信息成功'
+            message: '账户修改密码成功!'
           })
-        })
-      })
+          this.$router.push('/')
+        } else {
+          this.$message({
+            type: 'error',
+            message: `账户修改密码失败！${data.error}`
+          })
+        }
+      } else {
+        this.$message.error('请仔细核验表单项或检查两次输入密码是否一致')
+      }
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
@@ -278,6 +368,7 @@ export default {
   created () {
     this.loadStyleChannels()
     this.loadAddresChannels()
+    this.getuserinfo()
   }
 }
 </script>
@@ -307,6 +398,15 @@ export default {
 body > .el-container {
   margin-bottom: 40px;
 }
+.bigcard {
+    position: relative;
+    .imgblock {
+      width: 15%;
+      position: absolute;
+      top: 12%;
+      right:10%;
+    }
+  }
 .el-col {
   border-radius: 4px;
   .text {

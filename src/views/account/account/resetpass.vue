@@ -87,6 +87,7 @@ export default {
             type: 'success',
             message: '账户修改密码成功!'
           })
+          this.$router.push('/')
         } else {
           this.$message({
             type: 'error',
