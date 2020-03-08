@@ -40,7 +40,7 @@
     </el-header>
     <el-main>
         <el-tabs v-model="activeName">
-        <el-tab-pane label="用户管理" name="center">
+        <el-tab-pane label="个人信息更新" name="center">
         <el-card class="bigcard">
         <bread-crumb slot="header">
         <template slot="title">个人信息更新</template>
@@ -83,7 +83,7 @@
             </el-image>
         </div>
       </el-card></el-tab-pane>
-            <el-tab-pane label="配置管理" name="repass"><el-card>
+            <el-tab-pane label="密码修改" name="repass"><el-card>
         <bread-crumb slot="header">
           <template slot="title">密码修改中心</template>
         </bread-crumb>
